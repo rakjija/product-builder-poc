@@ -6,60 +6,135 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>로또 번호 추천기</title>
   <style>
+    :root {
+      color-scheme: light;
+      --bg-start: #f4f7fb;
+      --bg-end: #dbe7ff;
+      --text-main: #172033;
+      --text-muted: #5b6475;
+      --panel-bg: rgba(255, 255, 255, 0.86);
+      --panel-border: rgba(255, 255, 255, 0.6);
+      --panel-shadow: 0 18px 40px rgba(34, 56, 108, 0.16);
+      --card-bg: rgba(248, 250, 252, 0.92);
+      --card-border: #dbe3f0;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --toggle-bg: rgba(37, 99, 235, 0.12);
+      --toggle-border: rgba(37, 99, 235, 0.18);
+      --toggle-text: #1742a0;
+      --info-text: #6b7280;
+    }
+
+    body[data-theme="dark"] {
+      color-scheme: dark;
+      --bg-start: #09111f;
+      --bg-end: #162645;
+      --text-main: #f3f7ff;
+      --text-muted: #bac6db;
+      --panel-bg: rgba(9, 17, 31, 0.78);
+      --panel-border: rgba(148, 163, 184, 0.2);
+      --panel-shadow: 0 18px 44px rgba(2, 6, 23, 0.42);
+      --card-bg: rgba(15, 23, 42, 0.92);
+      --card-border: rgba(148, 163, 184, 0.2);
+      --accent: #60a5fa;
+      --accent-hover: #3b82f6;
+      --toggle-bg: rgba(96, 165, 250, 0.14);
+      --toggle-border: rgba(96, 165, 250, 0.2);
+      --toggle-text: #dbeafe;
+      --info-text: #94a3b8;
+    }
+
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
+      font-family: "Pretendard", "Noto Sans KR", sans-serif;
+      background: linear-gradient(160deg, var(--bg-start), var(--bg-end));
+      color: var(--text-main);
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       padding: 24px;
+      transition: background 0.25s ease, color 0.25s ease;
     }
 
     .container {
       width: 100%;
       max-width: 760px;
-      background: #fff;
-      border-radius: 16px;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 24px;
       padding: 32px 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--panel-shadow);
+      backdrop-filter: blur(18px);
       text-align: center;
     }
 
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .header-copy {
+      flex: 1;
+    }
+
     h1 {
-      margin: 0 0 12px;
-      font-size: 28px;
+      margin: 0 0 10px;
+      font-size: 32px;
     }
 
     p {
       margin: 0 0 24px;
-      color: #666;
+      color: var(--text-muted);
+      line-height: 1.6;
     }
 
     button {
       border: none;
-      background: #2563eb;
+      background: var(--accent);
       color: white;
       padding: 14px 20px;
-      border-radius: 10px;
+      border-radius: 14px;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.2s ease, transform 0.1s ease;
+      transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
     }
 
     button:hover {
-      background: #1d4ed8;
+      background: var(--accent-hover);
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.2);
     }
 
     button:active {
       transform: scale(0.98);
+    }
+
+    .theme-toggle {
+      flex-shrink: 0;
+      padding: 12px 16px;
+      background: var(--toggle-bg);
+      border: 1px solid var(--toggle-border);
+      color: var(--toggle-text);
+      box-shadow: none;
+    }
+
+    .theme-toggle:hover {
+      background: var(--toggle-bg);
+      box-shadow: none;
+      opacity: 0.92;
+    }
+
+    .generate-btn {
+      width: 100%;
     }
 
     .sets {
@@ -70,18 +145,19 @@
     }
 
     .set-card {
-      background: #f8fafc;
-      border: 1px solid #e5e7eb;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
       border-radius: 14px;
       padding: 16px;
       text-align: left;
+      transition: background 0.25s ease, border-color 0.25s ease;
     }
 
     .set-title {
       font-size: 15px;
       font-weight: bold;
       margin-bottom: 12px;
-      color: #374151;
+      color: var(--text-main);
     }
 
     .numbers {
@@ -125,12 +201,27 @@
     .info {
       margin-top: 20px;
       font-size: 14px;
-      color: #888;
+      color: var(--info-text);
+    }
+
+    .theme-status {
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--text-muted);
     }
 
     @media (max-width: 640px) {
       .container {
         padding: 24px 16px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .theme-toggle {
+        width: 100%;
       }
 
       .ball {
@@ -144,18 +235,56 @@
 
 <body>
   <div class="container">
-    <h1>로또 번호 추천기</h1>
-    <p>버튼을 누르면 중복 없는 로또 번호 5세트를 추천함</p>
-    <button id="generateBtn">번호 5세트 추천받기</button>
+    <div class="header">
+      <div class="header-copy">
+        <h1>로또 번호 추천기</h1>
+        <p>버튼을 누르면 중복 없는 로또 번호 5세트를 추천합니다</p>
+      </div>
+      <button class="theme-toggle" id="themeToggleBtn" type="button">다크 모드</button>
+    </div>
+    <button class="generate-btn" id="generateBtn" type="button">번호 5세트 추천받기</button>
+    <div class="theme-status" id="themeStatus"></div>
 
     <div class="sets" id="sets"></div>
     <div class="info" id="info"></div>
   </div>
 
   <script>
+    const themeStorageKey = "lotto-theme";
+    const themeToggleBtn = document.getElementById("themeToggleBtn");
+    const themeStatusEl = document.getElementById("themeStatus");
     const generateBtn = document.getElementById("generateBtn");
     const setsEl = document.getElementById("sets");
     const infoEl = document.getElementById("info");
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+    function getInitialTheme() {
+      const storedTheme = window.localStorage.getItem(themeStorageKey);
+
+      if (storedTheme === "light" || storedTheme === "dark") {
+        return storedTheme;
+      }
+
+      return prefersDarkScheme.matches ? "dark" : "light";
+    }
+
+    function applyTheme(theme) {
+      document.body.dataset.theme = theme;
+      themeToggleBtn.textContent = theme === "dark" ? "화이트 모드" : "다크 모드";
+      themeStatusEl.textContent = theme === "dark"
+        ? "현재 다크 모드 사용 중"
+        : "현재 화이트 모드 사용 중";
+    }
+
+    function setTheme(theme) {
+      window.localStorage.setItem(themeStorageKey, theme);
+      applyTheme(theme);
+    }
+
+    function toggleTheme() {
+      const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
+      setTheme(nextTheme);
+    }
 
     function getRandomLottoNumbers() {
       const set = new Set();
@@ -208,8 +337,18 @@
       infoEl.textContent = `추천 시간: ${now.toLocaleString("ko-KR")}`;
     }
 
+    prefersDarkScheme.addEventListener("change", (event) => {
+      if (window.localStorage.getItem(themeStorageKey)) {
+        return;
+      }
+
+      applyTheme(event.matches ? "dark" : "light");
+    });
+
+    themeToggleBtn.addEventListener("click", toggleTheme);
     generateBtn.addEventListener("click", renderSets);
 
+    applyTheme(getInitialTheme());
     renderSets();
   </script>
 </body>
