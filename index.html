@@ -279,6 +279,19 @@
       color: var(--info-text);
     }
 
+    .comments-section {
+      margin-top: 32px;
+      padding: 24px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      text-align: left;
+    }
+
+    #disqus_thread {
+      min-height: 160px;
+    }
+
     .visually-hidden {
       position: absolute;
       width: 1px;
@@ -364,6 +377,16 @@
         <button type="submit">제휴 문의 보내기</button>
         <p class="form-note">제출 시 `Formspree`를 통해 문의가 전송됩니다.</p>
       </form>
+    </section>
+
+    <section class="comments-section" aria-labelledby="commentsHeading">
+      <h2 class="section-heading" id="commentsHeading">댓글</h2>
+      <p class="section-description">의견이나 피드백을 자유롭게 남겨주세요</p>
+      <div id="disqus_thread"></div>
+      <noscript>
+        Please enable JavaScript to view the
+        <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+      </noscript>
     </section>
   </div>
 
@@ -468,6 +491,20 @@
 
     applyTheme(getInitialTheme());
     renderSets();
+  </script>
+  <script>
+    var disqus_config = function () {
+      this.page.url = window.location.origin + window.location.pathname;
+      this.page.identifier = "lotto-home";
+    };
+
+    (function () {
+      var d = document;
+      var s = d.createElement("script");
+      s.src = "https://product-builder-pj9pqrdryg.disqus.com/embed.js";
+      s.setAttribute("data-timestamp", +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
   </script>
 </body>
 
