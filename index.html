@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로또 번호 추천기</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 760px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 28px;
+    }
+
+    p {
+      margin: 0 0 24px;
+      color: #666;
+    }
+
+    button {
+      border: none;
+      background: #2563eb;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.1s ease;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .sets {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .set-card {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 16px;
+      text-align: left;
+    }
+
+    .set-title {
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: #374151;
+    }
+
+    .numbers {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .ball {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .range-1-10 {
+      background: #f59e0b;
+    }
+
+    .range-11-20 {
+      background: #3b82f6;
+    }
+
+    .range-21-30 {
+      background: #ef4444;
+    }
+
+    .range-31-40 {
+      background: #6b7280;
+    }
+
+    .range-41-45 {
+      background: #22c55e;
+    }
+
+    .info {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 24px 16px;
+      }
+
+      .ball {
+        width: 46px;
+        height: 46px;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>로또 번호 추천기</h1>
+    <p>버튼을 누르면 중복 없는 로또 번호 5세트를 추천함</p>
+    <button id="generateBtn">번호 5세트 추천받기</button>
+
+    <div class="sets" id="sets"></div>
+    <div class="info" id="info"></div>
+  </div>
+
+  <script>
+    const generateBtn = document.getElementById("generateBtn");
+    const setsEl = document.getElementById("sets");
+    const infoEl = document.getElementById("info");
+
+    function getRandomLottoNumbers() {
+      const set = new Set();
+
+      while (set.size < 6) {
+        const randomNumber = Math.floor(Math.random() * 45) + 1;
+        set.add(randomNumber);
+      }
+
+      return [ ...set ].sort((a, b) => a - b);
+    }
+
+    function getBallClass(number) {
+      if (number <= 10) return "range-1-10";
+      if (number <= 20) return "range-11-20";
+      if (number <= 30) return "range-21-30";
+      if (number <= 40) return "range-31-40";
+      return "range-41-45";
+    }
+
+    function renderSets() {
+      setsEl.innerHTML = "";
+
+      for (let i = 1; i <= 5; i++) {
+        const numbers = getRandomLottoNumbers();
+
+        const card = document.createElement("div");
+        card.className = "set-card";
+
+        const title = document.createElement("div");
+        title.className = "set-title";
+        title.textContent = `${i}번째 추천 번호`;
+
+        const numbersWrap = document.createElement("div");
+        numbersWrap.className = "numbers";
+
+        numbers.forEach((number) => {
+          const ball = document.createElement("div");
+          ball.className = `ball ${getBallClass(number)}`;
+          ball.textContent = number;
+          numbersWrap.appendChild(ball);
+        });
+
+        card.appendChild(title);
+        card.appendChild(numbersWrap);
+        setsEl.appendChild(card);
+      }
+
+      const now = new Date();
+      infoEl.textContent = `추천 시간: ${now.toLocaleString("ko-KR")}`;
+    }
+
+    generateBtn.addEventListener("click", renderSets);
+
+    renderSets();
+  </script>
+</body>
+
+</html>
