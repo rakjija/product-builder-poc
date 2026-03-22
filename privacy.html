@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="동물상 연구소의 개인정보 처리와 제3자 서비스 사용 범위를 안내합니다." />
+  <meta name="google-adsense-account" content="ca-pub-6131677375870922" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <title>개인정보 처리 | 동물상 연구소</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6131677375870922"
+    crossorigin="anonymous"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f7fb;
+      --surface: rgba(255, 255, 255, 0.92);
+      --surface-border: rgba(66, 84, 102, 0.12);
+      --text-main: #1c2430;
+      --text-muted: #5f6a79;
+      --shadow: 0 20px 44px rgba(55, 72, 92, 0.12);
+    }
+    body[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0f141d;
+      --surface: rgba(23, 29, 40, 0.92);
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --text-main: #eef5ff;
+      --text-muted: #b8c2d0;
+      --shadow: 0 24px 52px rgba(0, 0, 0, 0.3);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Pretendard", "Noto Sans KR", sans-serif; background: var(--bg); color: var(--text-main); }
+    a { color: inherit; text-decoration: none; }
+    .page { width: min(920px, calc(100% - 32px)); margin: 0 auto; padding: 24px 0 56px; }
+    .topbar, .card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      box-shadow: var(--shadow);
+      border-radius: 28px;
+    }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:14px 18px; margin-bottom:24px; }
+    .nav { display:flex; gap:14px; flex-wrap:wrap; }
+    .theme-toggle { border:1px solid var(--surface-border); background:transparent; color:var(--text-main); padding:10px 14px; border-radius:999px; cursor:pointer; }
+    .card { padding:28px; margin-bottom:20px; }
+    h1, h2 { letter-spacing:-0.04em; }
+    h1 { margin:0 0 14px; font-size: clamp(34px, 6vw, 52px); }
+    h2 { margin:0 0 10px; font-size:26px; }
+    p, li { color: var(--text-muted); line-height:1.8; }
+    ul { margin:16px 0 0; padding-left:18px; }
+    @media (max-width:720px) { .topbar, .nav { display:grid; grid-template-columns:1fr; } .card { padding:22px; } }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div><strong>동물상 연구소</strong></div>
+      <nav class="nav">
+        <a href="./index.html">홈</a>
+        <a href="./animal-face.html">테스트</a>
+        <a href="./about.html">사이트 소개</a>
+        <a href="./contact.html">문의하기</a>
+        <button class="theme-toggle" id="themeToggleBtn" type="button">다크 모드</button>
+      </nav>
+    </header>
+
+    <section class="card">
+      <h1>개인정보 처리 안내</h1>
+      <p>이 페이지는 동물상 연구소에서 사용하는 입력 데이터와 외부 서비스 범위를 사용자가 쉽게 이해할 수 있도록 설명하기 위한 안내문입니다.</p>
+    </section>
+
+    <section class="card">
+      <h2>테스트 입력 데이터 처리</h2>
+      <ul>
+        <li>웹캠 프레임과 업로드 이미지는 브라우저 안에서 테스트 실행에 사용됩니다.</li>
+        <li>현재 사이트 자체에는 이미지를 별도 저장하거나 수집하는 서버 로직을 두지 않았습니다.</li>
+        <li>사용자는 원할 때 웹캠을 중지하거나 다른 이미지로 다시 테스트할 수 있습니다.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>외부 서비스 사용</h2>
+      <ul>
+        <li>`Teachable Machine` 모델 파일을 외부 URL에서 불러옵니다.</li>
+        <li>`Google AdSense` 관련 스크립트와 사이트 확인용 메타 태그를 사용합니다.</li>
+        <li>문의 폼 전송에는 `Formspree`를 사용하며, 사용자가 직접 입력한 정보만 전송됩니다.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>문의 데이터</h2>
+      <p>문의 페이지에서 이름, 이메일, 메시지를 입력하면 해당 정보는 문의 응답을 위해 `Formspree`를 통해 전달됩니다. 문의와 무관한 목적으로 직접 저장하거나 재가공하는 기능은 사이트에 두지 않았습니다.</p>
+    </section>
+  </main>
+
+  <script>
+    const themeStorageKey = "animal-lab-theme";
+    const themeToggleBtn = document.getElementById("themeToggleBtn");
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+    function getInitialTheme() {
+      const storedTheme = window.localStorage.getItem(themeStorageKey);
+      if (storedTheme === "light" || storedTheme === "dark") return storedTheme;
+      return prefersDarkScheme.matches ? "dark" : "light";
+    }
+    function applyTheme(theme) {
+      document.body.dataset.theme = theme;
+      themeToggleBtn.textContent = theme === "dark" ? "화이트 모드" : "다크 모드";
+    }
+    function setTheme(theme) {
+      window.localStorage.setItem(themeStorageKey, theme);
+      applyTheme(theme);
+    }
+    themeToggleBtn.addEventListener("click", () => {
+      setTheme(document.body.dataset.theme === "dark" ? "light" : "dark");
+    });
+    applyTheme(getInitialTheme());
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <title>페이지를 찾을 수 없음 | 동물상 연구소</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fb;
+      --surface: rgba(255,255,255,0.94);
+      --surface-border: rgba(68, 86, 102, 0.12);
+      --text-main: #1b2430;
+      --text-muted: #627081;
+      --accent: #dc6e36;
+      --shadow: 0 24px 48px rgba(63, 77, 92, 0.12);
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      font-family: "Pretendard", "Noto Sans KR", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+    .card {
+      width: min(680px, 100%);
+      padding: 36px;
+      border-radius: 30px;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    h1 { margin: 0 0 14px; font-size: clamp(34px, 6vw, 54px); letter-spacing: -0.05em; }
+    p { margin: 0 0 20px; color: var(--text-muted); line-height: 1.8; }
+    .links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .link {
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--surface-border);
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .link.primary { background: var(--accent); color: #fff; border-color: transparent; }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+    <h1>페이지를 찾을 수 없습니다</h1>
+    <p>주소가 잘못 입력되었거나 페이지 경로가 변경되었을 수 있습니다. 필요한 정보는 홈이나 테스트 페이지에서 다시 찾아볼 수 있습니다.</p>
+    <div class="links">
+      <a class="link primary" href="./index.html">홈으로 이동</a>
+      <a class="link" href="./animal-face.html">테스트 열기</a>
+      <a class="link" href="./contact.html">문의하기</a>
+    </div>
+  </main>
+</body>
+
+</html>

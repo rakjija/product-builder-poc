@@ -4,457 +4,578 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="동물상 연구소는 강아지상과 고양이상 분류 모델을 바탕으로 테스트, 사용 가이드, 해석 방법을 함께 제공하는 정보형 사이트입니다." />
   <meta name="google-adsense-account" content="ca-pub-6131677375870922" />
-  <title>로또 번호 추천기</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <title>동물상 연구소 | 강아지상·고양이상 테스트 가이드</title>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6131677375870922"
     crossorigin="anonymous"></script>
   <style>
     :root {
       color-scheme: light;
-      --bg-start: #f4f7fb;
-      --bg-end: #dbe7ff;
-      --text-main: #172033;
-      --text-muted: #5b6475;
-      --panel-bg: rgba(255, 255, 255, 0.86);
-      --panel-border: rgba(255, 255, 255, 0.6);
-      --panel-shadow: 0 18px 40px rgba(34, 56, 108, 0.16);
-      --card-bg: rgba(248, 250, 252, 0.92);
-      --card-border: #dbe3f0;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
-      --toggle-bg: rgba(37, 99, 235, 0.12);
-      --toggle-border: rgba(37, 99, 235, 0.18);
-      --toggle-text: #1742a0;
-      --info-text: #6b7280;
+      --bg-top: #fff4ea;
+      --bg-bottom: #f8f2ff;
+      --surface: rgba(255, 255, 255, 0.84);
+      --surface-strong: rgba(255, 255, 255, 0.94);
+      --surface-border: rgba(98, 61, 39, 0.12);
+      --text-main: #251812;
+      --text-muted: #6e5447;
+      --accent: #de6b34;
+      --accent-hover: #c85824;
+      --accent-soft: rgba(222, 107, 52, 0.14);
+      --secondary: #21677f;
+      --secondary-soft: rgba(33, 103, 127, 0.14);
+      --shadow: 0 24px 50px rgba(92, 53, 31, 0.12);
+      --track: rgba(37, 24, 18, 0.08);
     }
 
     body[data-theme="dark"] {
       color-scheme: dark;
-      --bg-start: #09111f;
-      --bg-end: #162645;
-      --text-main: #f3f7ff;
-      --text-muted: #bac6db;
-      --panel-bg: rgba(9, 17, 31, 0.78);
-      --panel-border: rgba(148, 163, 184, 0.2);
-      --panel-shadow: 0 18px 44px rgba(2, 6, 23, 0.42);
-      --card-bg: rgba(15, 23, 42, 0.92);
-      --card-border: rgba(148, 163, 184, 0.2);
-      --accent: #60a5fa;
-      --accent-hover: #3b82f6;
-      --toggle-bg: rgba(96, 165, 250, 0.14);
-      --toggle-border: rgba(96, 165, 250, 0.2);
-      --toggle-text: #dbeafe;
-      --info-text: #94a3b8;
+      --bg-top: #171017;
+      --bg-bottom: #120d1d;
+      --surface: rgba(25, 18, 25, 0.88);
+      --surface-strong: rgba(35, 25, 35, 0.96);
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --text-main: #fff5ee;
+      --text-muted: #d1b9ae;
+      --accent: #ff9a66;
+      --accent-hover: #ff8548;
+      --accent-soft: rgba(255, 154, 102, 0.18);
+      --secondary: #8dddf0;
+      --secondary-soft: rgba(141, 221, 240, 0.16);
+      --shadow: 0 26px 56px rgba(0, 0, 0, 0.28);
+      --track: rgba(255, 245, 238, 0.08);
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: "Pretendard", "Noto Sans KR", sans-serif;
-      background: linear-gradient(160deg, var(--bg-start), var(--bg-end));
       color: var(--text-main);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 24px;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.52), transparent 28%),
+        linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
       transition: background 0.25s ease, color 0.25s ease;
     }
 
-    .container {
-      width: 100%;
-      max-width: 760px;
-      background: var(--panel-bg);
-      border: 1px solid var(--panel-border);
-      border-radius: 24px;
-      padding: 32px 24px;
-      box-shadow: var(--panel-shadow);
-      backdrop-filter: blur(18px);
-      text-align: center;
-    }
-
-    .header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 12px;
-      text-align: left;
-    }
-
-    .header-copy {
-      flex: 1;
-    }
-
-    h1 {
-      margin: 0 0 10px;
-      font-size: 32px;
-    }
-
-    p {
-      margin: 0 0 24px;
-      color: var(--text-muted);
-      line-height: 1.6;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     button {
-      border: none;
-      background: var(--accent);
-      color: white;
-      padding: 14px 20px;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+      font: inherit;
     }
 
-    button:hover {
-      background: var(--accent-hover);
-      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.2);
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 56px;
     }
 
-    button:active {
-      transform: scale(0.98);
+    .topbar,
+    .hero,
+    .content-grid,
+    .footer {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      margin-bottom: 24px;
+      position: sticky;
+      top: 16px;
+      z-index: 10;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--secondary));
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .nav a,
+    .theme-toggle {
+      color: var(--text-muted);
+      font-size: 14px;
     }
 
     .theme-toggle {
-      flex-shrink: 0;
-      padding: 12px 16px;
-      background: var(--toggle-bg);
-      border: 1px solid var(--toggle-border);
-      color: var(--toggle-text);
-      box-shadow: none;
-    }
-
-    .theme-toggle:hover {
-      background: var(--toggle-bg);
-      box-shadow: none;
-      opacity: 0.92;
-    }
-
-    .generate-btn {
-      width: 100%;
-    }
-
-    .sets {
-      margin-top: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .set-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 16px;
-      text-align: left;
-      transition: background 0.25s ease, border-color 0.25s ease;
-    }
-
-    .set-title {
-      font-size: 15px;
-      font-weight: bold;
-      margin-bottom: 12px;
+      border: 1px solid var(--surface-border);
+      background: var(--surface-strong);
       color: var(--text-main);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
     }
 
-    .numbers {
+    .hero {
+      padding: 36px;
+      border-radius: 32px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(38px, 6vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+    }
+
+    .hero-copy {
+      margin: 0 0 24px;
+      color: var(--text-muted);
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
       display: flex;
+      gap: 12px;
       flex-wrap: wrap;
-      gap: 10px;
     }
 
-    .ball {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      display: flex;
+    .btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      font-weight: bold;
+      min-height: 52px;
+      padding: 0 18px;
+      border-radius: 16px;
+      font-weight: 800;
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--accent);
       color: #fff;
     }
 
-    .range-1-10 {
-      background: #f59e0b;
+    .btn-primary:hover {
+      background: var(--accent-hover);
     }
 
-    .range-11-20 {
-      background: #3b82f6;
+    .btn-secondary {
+      background: var(--secondary-soft);
+      color: var(--secondary);
     }
 
-    .range-21-30 {
-      background: #ef4444;
-    }
-
-    .range-31-40 {
-      background: #6b7280;
-    }
-
-    .range-41-45 {
-      background: #22c55e;
-    }
-
-    .info {
-      margin-top: 20px;
-      font-size: 14px;
-      color: var(--info-text);
-    }
-
-    .theme-status {
-      margin-top: 14px;
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
-    .contact-section {
-      margin-top: 32px;
-      padding: 24px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      text-align: left;
-    }
-
-    .section-heading {
-      margin: 0 0 8px;
-      font-size: 24px;
-    }
-
-    .section-description {
-      margin-bottom: 20px;
-    }
-
-    .contact-form {
+    .hero-side {
       display: grid;
       gap: 14px;
     }
 
-    .form-field {
-      display: grid;
-      gap: 8px;
+    .hero-card {
+      padding: 20px;
+      border-radius: 24px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
     }
 
-    .form-label {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    .form-input,
-    .form-textarea {
-      width: 100%;
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.72);
-      color: var(--text-main);
-      padding: 14px 16px;
-      font: inherit;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    }
-
-    body[data-theme="dark"] .form-input,
-    body[data-theme="dark"] .form-textarea {
-      background: rgba(15, 23, 42, 0.82);
-    }
-
-    .form-input:focus,
-    .form-textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
-    }
-
-    .form-textarea {
-      min-height: 140px;
-      resize: vertical;
-    }
-
-    .form-note {
-      margin: 0;
-      font-size: 13px;
-      color: var(--info-text);
-    }
-
-    .comments-section {
-      margin-top: 32px;
-      padding: 24px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      text-align: left;
-    }
-
-    .feature-link-card {
-      margin-top: 24px;
-      padding: 24px;
-      background: linear-gradient(135deg, rgba(229, 107, 53, 0.12), rgba(38, 102, 127, 0.14));
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      text-align: left;
-    }
-
-    .feature-link-card h2 {
+    .hero-card h2,
+    .section-card h2 {
       margin: 0 0 10px;
       font-size: 24px;
+      letter-spacing: -0.03em;
     }
 
-    .feature-link-card p {
-      margin-bottom: 16px;
+    .hero-card p,
+    .section-card p,
+    .faq-answer,
+    .footer p,
+    li {
+      margin: 0;
+      color: var(--text-muted);
+      line-height: 1.75;
     }
 
-    .feature-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 0 18px;
-      border-radius: 14px;
-      background: var(--accent);
-      color: #fff;
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    #disqus_thread {
-      min-height: 160px;
-    }
-
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
+    .bullet-list,
+    .check-list {
+      display: grid;
+      gap: 12px;
       padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+      margin: 16px 0 0;
+      list-style: none;
     }
 
-    @media (max-width: 640px) {
-      .container {
-        padding: 24px 16px;
+    .bullet-list li,
+    .check-list li {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+    }
+
+    .content-grid {
+      border-radius: 32px;
+      padding: 30px;
+      margin-bottom: 24px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .section-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .section-card {
+      padding: 24px;
+      border-radius: 24px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--accent-soft), var(--secondary-soft));
+      border: 1px solid var(--surface-border);
+    }
+
+    .stat strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .faq-item {
+      padding: 22px;
+      border-radius: 24px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+    }
+
+    .faq-item h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .footer {
+      border-radius: 28px;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .footer-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+      color: var(--text-main);
+      font-size: 14px;
+    }
+
+    .fineprint {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .section-row,
+      .faq-grid,
+      .footer {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        width: min(100% - 20px, 100%);
+        padding-top: 18px;
       }
 
-      .header {
-        flex-direction: column;
-        align-items: stretch;
+      .topbar {
+        border-radius: 28px;
+        align-items: flex-start;
       }
 
-      .theme-toggle {
-        width: 100%;
+      .topbar,
+      .nav,
+      .hero-actions,
+      .stats {
+        display: grid;
+        grid-template-columns: 1fr;
       }
 
-      .ball {
-        width: 46px;
-        height: 46px;
-        font-size: 16px;
+      .hero,
+      .content-grid,
+      .footer {
+        padding: 22px;
+      }
+
+      h1 {
+        font-size: 42px;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="header-copy">
-        <h1>로또 번호 추천기</h1>
-        <p>버튼을 누르면 중복 없는 로또 번호 5세트를 추천합니다</p>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="./index.html">
+        <span class="brand-dot"></span>
+        <span>동물상 연구소</span>
+      </a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="./animal-face.html">테스트 시작</a>
+        <a href="./about.html">사이트 소개</a>
+        <a href="./privacy.html">개인정보 처리</a>
+        <a href="./contact.html">문의하기</a>
+        <button class="theme-toggle" id="themeToggleBtn" type="button">다크 모드</button>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <span class="eyebrow">콘텐츠 중심 구조로 재정리한 동물상 테스트 사이트</span>
+        <h1>재미로 끝나지 않는<br />동물상 테스트 가이드</h1>
+        <p class="hero-copy">
+          동물상 연구소는 단순 결과만 보여주는 페이지가 아니라,
+          테스트 사용법, 모델 동작 방식, 결과 해석 기준, 개인정보 처리 방식까지 함께 제공하는 정보형 사이트입니다.
+          사용자는 테스트를 실행하기 전 무엇을 기대할 수 있는지, 어떤 한계가 있는지, 어떤 사진이 더 잘 동작하는지 바로 확인할 수 있습니다.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="./animal-face.html">강아지상 / 고양이상 테스트</a>
+          <a class="btn btn-secondary" href="./about.html">운영 원칙 보기</a>
+        </div>
       </div>
-      <button class="theme-toggle" id="themeToggleBtn" type="button">다크 모드</button>
-    </div>
-    <button class="generate-btn" id="generateBtn" type="button">번호 5세트 추천받기</button>
-    <div class="theme-status" id="themeStatus"></div>
 
-    <div class="sets" id="sets"></div>
-    <div class="info" id="info"></div>
-
-    <section class="feature-link-card" aria-labelledby="animalFaceHeading">
-      <h2 id="animalFaceHeading">새 페이지: 동물상 테스트</h2>
-      <p>업로드한 `Teachable Machine` 모델로 강아지상 / 고양이상을 분류하는 별도 페이지를 추가했습니다.</p>
-      <a class="feature-link" href="./animal-face.html">동물상 테스트 열기</a>
+      <aside class="hero-side">
+        <div class="hero-card">
+          <h2>이 사이트가 제공하는 것</h2>
+          <ul class="check-list">
+            <li>웹캠과 사진 업로드를 모두 지원하는 실제 테스트 도구</li>
+            <li>모델이 어떤 기준으로 반응하는지 설명하는 해석 가이드</li>
+            <li>문의, 개인정보 처리, 운영 목적이 분명한 보조 페이지</li>
+          </ul>
+        </div>
+        <div class="hero-card">
+          <h2>심사 대응을 위해 강화한 부분</h2>
+          <ul class="check-list">
+            <li>주제를 동물상 테스트 중심으로 통일</li>
+            <li>중복 없는 설명형 콘텐츠와 쉬운 탐색 구조 제공</li>
+            <li>광고보다 콘텐츠와 서비스 설명이 먼저 보이도록 구성</li>
+          </ul>
+        </div>
+      </aside>
     </section>
 
-    <section class="contact-section" aria-labelledby="contactHeading">
-      <h2 class="section-heading" id="contactHeading">제휴 문의</h2>
-      <p class="section-description">간단한 정보와 문의 내용을 남기면 확인 후 연락드립니다</p>
+    <section class="content-grid" id="quality">
+      <div class="section-row">
+        <article class="section-card">
+          <h2>무엇을 하는 사이트인가</h2>
+          <p>
+            현재 모델은 `dog`, `cat` 두 클래스를 기반으로 얼굴 인상을 분류합니다.
+            테스트 페이지에서는 분류 확률과 함께 사용자가 이해하기 쉬운 결과 설명을 제공합니다.
+            홈페이지는 이 도구를 올바르게 사용하기 위한 안내와 주의사항을 정리하는 역할을 맡습니다.
+          </p>
+          <div class="stats">
+            <div class="stat">
+              <strong>2</strong>
+              <span>분류 클래스</span>
+            </div>
+            <div class="stat">
+              <strong>2</strong>
+              <span>입력 방식: 웹캠 / 업로드</span>
+            </div>
+            <div class="stat">
+              <strong>4</strong>
+              <span>운영 보조 페이지: 소개 / 개인정보 / 문의 / 404</span>
+            </div>
+          </div>
+        </article>
 
-      <form class="contact-form" action="https://formspree.io/f/xwvrjnza" method="POST">
-        <input type="hidden" name="_subject" value="로또 번호 추천기 제휴 문의" />
+        <article class="section-card">
+          <h2>사용 전에 알면 좋은 점</h2>
+          <ul class="bullet-list">
+            <li>이 테스트는 재미와 실험 목적의 분류 도구이며 의료, 심리, 신원 판별 용도가 아닙니다.</li>
+            <li>얼굴이 작거나 조명이 불안정하면 확률이 출렁일 수 있습니다.</li>
+            <li>정면 사진, 단순한 배경, 눈과 코가 잘 보이는 구도에서 예측이 더 안정적입니다.</li>
+          </ul>
+        </article>
+      </div>
 
-        <label class="form-field">
-          <span class="form-label">회사명 또는 이름</span>
-          <input class="form-input" type="text" name="name" placeholder="예: ABC 미디어 / 홍길동" required />
-        </label>
+      <div class="section-row">
+        <article class="section-card">
+          <h2>모델 결과를 해석하는 법</h2>
+          <p>
+            높은 확률은 "절대적인 정답"이 아니라 현재 사진이나 프레임에서 모델이 더 강하게 감지한 특징을 뜻합니다.
+            예를 들어 강아지상 결과는 둥근 인상, 밝은 표정, 부드러운 윤곽에 더 반응할 수 있고,
+            고양이상 결과는 선이 또렷한 인상, 차분한 표정, 눈매 대비에 더 반응할 수 있습니다.
+          </p>
+        </article>
 
-        <label class="form-field">
-          <span class="form-label">이메일</span>
-          <input class="form-input" type="email" name="email" placeholder="contact@example.com" required />
-        </label>
-
-        <label class="form-field">
-          <span class="form-label">문의 유형</span>
-          <input class="form-input" type="text" name="category" placeholder="예: 광고 제휴, 콘텐츠 협업, API 연동" required />
-        </label>
-
-        <label class="form-field">
-          <span class="form-label">문의 내용</span>
-          <textarea class="form-textarea" name="message" placeholder="제휴 목적, 기대 효과, 회신받을 연락처를 함께 적어주세요" required></textarea>
-        </label>
-
-        <label class="visually-hidden">
-          <span>Leave this field empty</span>
-          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
-        </label>
-
-        <button type="submit">제휴 문의 보내기</button>
-        <p class="form-note">제출 시 `Formspree`를 통해 문의가 전송됩니다.</p>
-      </form>
+        <article class="section-card">
+          <h2>사이트 품질을 위해 추가한 구조</h2>
+          <p>
+            테스트만 놓고 끝나지 않도록 운영 목적, 연락 경로, 개인정보 처리, 404 안내를 별도 페이지로 분리했습니다.
+            이는 사용자가 필요한 정보를 쉽게 찾도록 돕고, 서비스의 책임 범위를 명확하게 보여줍니다.
+          </p>
+        </article>
+      </div>
     </section>
 
-    <section class="comments-section" aria-labelledby="commentsHeading">
-      <h2 class="section-heading" id="commentsHeading">댓글</h2>
-      <p class="section-description">의견이나 피드백을 자유롭게 남겨주세요</p>
-      <div id="disqus_thread"></div>
-      <noscript>
-        Please enable JavaScript to view the
-        <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-      </noscript>
+    <section class="content-grid">
+      <div class="section-row">
+        <article class="section-card">
+          <h2>테스트 진행 방법</h2>
+          <ul class="bullet-list">
+            <li>1. `테스트 시작` 페이지로 이동합니다.</li>
+            <li>2. 웹캠을 켜거나 사진을 업로드합니다.</li>
+            <li>3. 결과 카드에서 가장 높은 확률과 각 클래스 비율을 확인합니다.</li>
+            <li>4. 다른 사진이나 표정으로 다시 테스트해 차이를 비교합니다.</li>
+          </ul>
+        </article>
+
+        <article class="section-card">
+          <h2>누구에게 유용한가</h2>
+          <ul class="bullet-list">
+            <li>친구들과 가볍게 결과를 비교해 보고 싶은 사용자</li>
+            <li>Teachable Machine 기반 이미지 분류 예제를 보고 싶은 제작자</li>
+            <li>얼굴 사진 입력형 인터랙티브 콘텐츠 구조를 참고하고 싶은 운영자</li>
+          </ul>
+        </article>
+      </div>
     </section>
-  </div>
+
+    <section class="content-grid">
+      <h2 style="margin:0; font-size:28px; letter-spacing:-0.04em;">자주 묻는 질문</h2>
+      <div class="faq-grid">
+        <article class="faq-item">
+          <h3>정확도가 항상 같나요?</h3>
+          <p class="faq-answer">아닙니다. 같은 사람도 조명, 거리, 표정, 각도에 따라 결과가 달라질 수 있습니다.</p>
+        </article>
+        <article class="faq-item">
+          <h3>사진이 서버에 저장되나요?</h3>
+          <p class="faq-answer">정적 사이트 특성상 업로드 이미지와 웹캠 프레임은 브라우저 안에서 처리되며, 별도 업로드 저장 로직은 두지 않았습니다.</p>
+        </article>
+        <article class="faq-item">
+          <h3>왜 소개/정책/문의 페이지가 필요한가요?</h3>
+          <p class="faq-answer">테스트 서비스의 목적과 책임 범위, 사용자 문의 경로를 명확히 보여줘야 사이트 신뢰성이 높아집니다.</p>
+        </article>
+        <article class="faq-item">
+          <h3>광고는 어디에 들어가나요?</h3>
+          <p class="faq-answer">현재는 사이트 확인용 `AdSense` 설정만 넣은 상태이며, 실제 광고 단위는 콘텐츠 균형을 해치지 않는 범위에서만 추가할 예정입니다.</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <h2 style="margin:0 0 10px; font-size:24px; letter-spacing:-0.03em;">동물상 연구소 운영 메모</h2>
+        <p>
+          이 사이트는 동물상 테스트 도구와 그 해석 정보를 함께 제공하는 소규모 정보형 프로젝트입니다.
+          광고보다 사용자가 먼저 이해해야 할 내용이 무엇인지에 우선순위를 두고, 중복 콘텐츠를 만들기보다 필요한 페이지를 명확히 분리하는 방향으로 운영합니다.
+        </p>
+        <div class="footer-links">
+          <a class="footer-link" href="./animal-face.html">테스트 시작</a>
+          <a class="footer-link" href="./about.html">사이트 소개</a>
+          <a class="footer-link" href="./privacy.html">개인정보 처리</a>
+          <a class="footer-link" href="./contact.html">문의하기</a>
+        </div>
+      </div>
+      <div>
+        <h2 style="margin:0 0 10px; font-size:24px; letter-spacing:-0.03em;">안내</h2>
+        <p>이 사이트의 결과는 재미와 실험 목적이며, 외모를 평가하거나 판정하기 위한 서비스가 아닙니다.</p>
+        <p class="fineprint">콘텐츠 없는 404 페이지에는 광고를 두지 않고, 운영 정보와 연락 경로는 별도 페이지에서 제공합니다.</p>
+      </div>
+    </footer>
+  </main>
 
   <script>
-    const themeStorageKey = "lotto-theme";
+    const themeStorageKey = "animal-lab-theme";
     const themeToggleBtn = document.getElementById("themeToggleBtn");
-    const themeStatusEl = document.getElementById("themeStatus");
-    const generateBtn = document.getElementById("generateBtn");
-    const setsEl = document.getElementById("sets");
-    const infoEl = document.getElementById("info");
     const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
     function getInitialTheme() {
       const storedTheme = window.localStorage.getItem(themeStorageKey);
-
       if (storedTheme === "light" || storedTheme === "dark") {
         return storedTheme;
       }
-
       return prefersDarkScheme.matches ? "dark" : "light";
     }
 
     function applyTheme(theme) {
       document.body.dataset.theme = theme;
       themeToggleBtn.textContent = theme === "dark" ? "화이트 모드" : "다크 모드";
-      themeStatusEl.textContent = theme === "dark"
-        ? "현재 다크 모드 사용 중"
-        : "현재 화이트 모드 사용 중";
     }
 
     function setTheme(theme) {
@@ -462,89 +583,19 @@
       applyTheme(theme);
     }
 
-    function toggleTheme() {
+    themeToggleBtn.addEventListener("click", () => {
       const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
       setTheme(nextTheme);
-    }
-
-    function getRandomLottoNumbers() {
-      const set = new Set();
-
-      while (set.size < 6) {
-        const randomNumber = Math.floor(Math.random() * 45) + 1;
-        set.add(randomNumber);
-      }
-
-      return [ ...set ].sort((a, b) => a - b);
-    }
-
-    function getBallClass(number) {
-      if (number <= 10) return "range-1-10";
-      if (number <= 20) return "range-11-20";
-      if (number <= 30) return "range-21-30";
-      if (number <= 40) return "range-31-40";
-      return "range-41-45";
-    }
-
-    function renderSets() {
-      setsEl.innerHTML = "";
-
-      for (let i = 1; i <= 5; i++) {
-        const numbers = getRandomLottoNumbers();
-
-        const card = document.createElement("div");
-        card.className = "set-card";
-
-        const title = document.createElement("div");
-        title.className = "set-title";
-        title.textContent = `${i}번째 추천 번호`;
-
-        const numbersWrap = document.createElement("div");
-        numbersWrap.className = "numbers";
-
-        numbers.forEach((number) => {
-          const ball = document.createElement("div");
-          ball.className = `ball ${getBallClass(number)}`;
-          ball.textContent = number;
-          numbersWrap.appendChild(ball);
-        });
-
-        card.appendChild(title);
-        card.appendChild(numbersWrap);
-        setsEl.appendChild(card);
-      }
-
-      const now = new Date();
-      infoEl.textContent = `추천 시간: ${now.toLocaleString("ko-KR")}`;
-    }
+    });
 
     prefersDarkScheme.addEventListener("change", (event) => {
       if (window.localStorage.getItem(themeStorageKey)) {
         return;
       }
-
       applyTheme(event.matches ? "dark" : "light");
     });
 
-    themeToggleBtn.addEventListener("click", toggleTheme);
-    generateBtn.addEventListener("click", renderSets);
-
     applyTheme(getInitialTheme());
-    renderSets();
-  </script>
-  <script>
-    var disqus_config = function () {
-      this.page.url = window.location.origin + window.location.pathname;
-      this.page.identifier = "lotto-home";
-    };
-
-    (function () {
-      var d = document;
-      var s = d.createElement("script");
-      s.src = "https://product-builder-pj9pqrdryg.disqus.com/embed.js";
-      s.setAttribute("data-timestamp", +new Date());
-      (d.head || d.body).appendChild(s);
-    })();
   </script>
 </body>
 

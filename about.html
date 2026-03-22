@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="동물상 연구소의 운영 목적, 테스트 제공 방식, 콘텐츠 원칙을 소개합니다." />
+  <meta name="google-adsense-account" content="ca-pub-6131677375870922" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <title>사이트 소개 | 동물상 연구소</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6131677375870922"
+    crossorigin="anonymous"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f4ff;
+      --surface: rgba(255, 255, 255, 0.9);
+      --surface-border: rgba(94, 76, 121, 0.12);
+      --text-main: #211825;
+      --text-muted: #6d5d79;
+      --accent: #d86b36;
+      --shadow: 0 22px 44px rgba(74, 53, 97, 0.12);
+    }
+
+    body[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #120f18;
+      --surface: rgba(32, 24, 39, 0.92);
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --text-main: #fff5ee;
+      --text-muted: #ccb9d6;
+      --accent: #ff9b69;
+      --shadow: 0 24px 52px rgba(0, 0, 0, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Pretendard", "Noto Sans KR", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+    a { color: inherit; text-decoration: none; }
+    .page {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 56px;
+    }
+    .topbar, .card, .footer {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      box-shadow: var(--shadow);
+      border-radius: 28px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+    }
+    .nav { display: flex; gap: 14px; flex-wrap: wrap; }
+    .theme-toggle {
+      border: 1px solid var(--surface-border);
+      background: transparent;
+      color: var(--text-main);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .card, .footer { padding: 28px; }
+    .card { margin-bottom: 20px; }
+    h1, h2 { letter-spacing: -0.04em; }
+    h1 { margin: 0 0 14px; font-size: clamp(34px, 6vw, 52px); }
+    h2 { margin: 0 0 10px; font-size: 26px; }
+    p, li { color: var(--text-muted); line-height: 1.8; }
+    ul { margin: 16px 0 0; padding-left: 18px; }
+    .footer-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+    .footer-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--surface-border);
+    }
+    @media (max-width: 720px) {
+      .topbar, .nav { display: grid; grid-template-columns: 1fr; }
+      .card, .footer { padding: 22px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div><strong>동물상 연구소</strong></div>
+      <nav class="nav">
+        <a href="./index.html">홈</a>
+        <a href="./animal-face.html">테스트</a>
+        <a href="./privacy.html">개인정보 처리</a>
+        <a href="./contact.html">문의하기</a>
+        <button class="theme-toggle" id="themeToggleBtn" type="button">다크 모드</button>
+      </nav>
+    </header>
+
+    <section class="card">
+      <h1>사이트 소개</h1>
+      <p>
+        동물상 연구소는 강아지상과 고양이상 분류 모델을 활용해 사용자에게 재미있는 테스트 경험과 해석 가이드를 함께 제공하는 소규모 정보형 사이트입니다.
+        단순히 버튼만 있는 도구 페이지가 아니라, 사용 목적, 사용법, 결과 해석, 개인정보 처리 방식, 문의 경로를 분리해 제공하는 것을 운영 원칙으로 삼고 있습니다.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>운영 목적</h2>
+      <ul>
+        <li>브라우저에서 실행되는 동물상 테스트를 누구나 쉽게 체험할 수 있게 제공</li>
+        <li>Teachable Machine 기반 이미지 분류 모델의 사용 예시를 설명과 함께 공개</li>
+        <li>결과를 과장하지 않고, 재미용·실험용 도구라는 점을 분명히 안내</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>콘텐츠 원칙</h2>
+      <ul>
+        <li>주제를 동물상 테스트 중심으로 유지하고, 중복 페이지를 만들지 않음</li>
+        <li>사용자가 실제로 필요로 하는 설명과 안내를 테스트 페이지 외부에 정리</li>
+        <li>운영 정보, 개인정보 처리, 연락 방법을 숨기지 않고 별도 페이지로 제공</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>모델과 결과에 대한 안내</h2>
+      <p>
+        현재 테스트는 `dog`, `cat` 두 클래스를 기준으로 분류하며, 결과는 업로드한 사진 또는 웹캠 프레임에서 모델이 더 강하게 감지한 특징을 확률값으로 보여줍니다.
+        이 결과는 절대적인 판정이 아니라 입력 이미지 조건에 따라 달라질 수 있는 실험용 분류 결과입니다.
+      </p>
+    </section>
+
+    <footer class="footer">
+      <h2>바로가기</h2>
+      <div class="footer-links">
+        <a class="footer-link" href="./index.html">홈</a>
+        <a class="footer-link" href="./animal-face.html">테스트</a>
+        <a class="footer-link" href="./privacy.html">개인정보 처리</a>
+        <a class="footer-link" href="./contact.html">문의하기</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const themeStorageKey = "animal-lab-theme";
+    const themeToggleBtn = document.getElementById("themeToggleBtn");
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+    function getInitialTheme() {
+      const storedTheme = window.localStorage.getItem(themeStorageKey);
+      if (storedTheme === "light" || storedTheme === "dark") return storedTheme;
+      return prefersDarkScheme.matches ? "dark" : "light";
+    }
+    function applyTheme(theme) {
+      document.body.dataset.theme = theme;
+      themeToggleBtn.textContent = theme === "dark" ? "화이트 모드" : "다크 모드";
+    }
+    function setTheme(theme) {
+      window.localStorage.setItem(themeStorageKey, theme);
+      applyTheme(theme);
+    }
+    themeToggleBtn.addEventListener("click", () => {
+      setTheme(document.body.dataset.theme === "dark" ? "light" : "dark");
+    });
+    applyTheme(getInitialTheme());
+  </script>
+</body>
+
+</html>

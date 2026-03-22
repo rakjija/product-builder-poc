@@ -4,7 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="웹캠 또는 사진 업로드로 강아지상과 고양이상 분류 결과를 확인하는 동물상 테스트 페이지입니다." />
   <meta name="google-adsense-account" content="ca-pub-6131677375870922" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
   <title>동물상 테스트 | 강아지상 vs 고양이상</title>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6131677375870922"
     crossorigin="anonymous"></script>
@@ -12,41 +14,41 @@
     :root {
       color-scheme: light;
       --bg-top: #fff3e8;
-      --bg-bottom: #ffe1d3;
-      --surface: rgba(255, 252, 247, 0.82);
-      --surface-strong: rgba(255, 255, 255, 0.9);
-      --surface-border: rgba(163, 84, 36, 0.14);
-      --text-main: #28160e;
-      --text-muted: #73584b;
-      --accent: #e56b35;
-      --accent-hover: #ca5725;
-      --accent-soft: rgba(229, 107, 53, 0.14);
-      --secondary: #26667f;
-      --secondary-soft: rgba(38, 102, 127, 0.14);
-      --shadow: 0 20px 40px rgba(128, 67, 35, 0.12);
-      --dog: #e56b35;
-      --cat: #26667f;
-      --track: rgba(40, 22, 14, 0.08);
+      --bg-bottom: #f3f0ff;
+      --surface: rgba(255, 255, 255, 0.86);
+      --surface-strong: rgba(255, 255, 255, 0.94);
+      --surface-border: rgba(108, 70, 50, 0.12);
+      --text-main: #2a1a13;
+      --text-muted: #75594b;
+      --accent: #e36e36;
+      --accent-hover: #cd5a27;
+      --accent-soft: rgba(227, 110, 54, 0.14);
+      --secondary: #246981;
+      --secondary-soft: rgba(36, 105, 129, 0.14);
+      --dog: #e36e36;
+      --cat: #246981;
+      --shadow: 0 24px 50px rgba(94, 57, 35, 0.12);
+      --track: rgba(42, 26, 19, 0.08);
     }
 
     body[data-theme="dark"] {
       color-scheme: dark;
-      --bg-top: #21110c;
-      --bg-bottom: #140d18;
-      --surface: rgba(24, 18, 23, 0.88);
-      --surface-strong: rgba(36, 28, 34, 0.96);
+      --bg-top: #191118;
+      --bg-bottom: #10131f;
+      --surface: rgba(24, 19, 27, 0.88);
+      --surface-strong: rgba(35, 28, 39, 0.95);
       --surface-border: rgba(255, 255, 255, 0.08);
-      --text-main: #fff4eb;
-      --text-muted: #d2b6a5;
-      --accent: #ff9966;
-      --accent-hover: #ff8750;
-      --accent-soft: rgba(255, 153, 102, 0.18);
-      --secondary: #86d5ed;
-      --secondary-soft: rgba(134, 213, 237, 0.16);
-      --shadow: 0 24px 48px rgba(0, 0, 0, 0.28);
-      --dog: #ff9966;
-      --cat: #86d5ed;
-      --track: rgba(255, 244, 235, 0.08);
+      --text-main: #fff5ed;
+      --text-muted: #d1b8ae;
+      --accent: #ff9c67;
+      --accent-hover: #ff8a50;
+      --accent-soft: rgba(255, 156, 103, 0.18);
+      --secondary: #90e0f1;
+      --secondary-soft: rgba(144, 224, 241, 0.16);
+      --dog: #ff9c67;
+      --cat: #90e0f1;
+      --shadow: 0 26px 54px rgba(0, 0, 0, 0.3);
+      --track: rgba(255, 245, 237, 0.08);
     }
 
     * {
@@ -55,11 +57,10 @@
 
     body {
       margin: 0;
-      min-height: 100vh;
       font-family: "Pretendard", "Noto Sans KR", sans-serif;
       color: var(--text-main);
       background:
-        radial-gradient(circle at top left, rgba(255, 255, 255, 0.45), transparent 30%),
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.45), transparent 28%),
         linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
       transition: background 0.25s ease, color 0.25s ease;
     }
@@ -70,15 +71,25 @@
     }
 
     button,
-    input,
-    textarea {
+    input {
       font: inherit;
     }
 
     .page {
       width: min(1120px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 28px 0 56px;
+      padding: 24px 0 56px;
+    }
+
+    .topbar,
+    .hero,
+    .stage-shell,
+    .info-shell,
+    .footer {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
     }
 
     .topbar {
@@ -86,51 +97,58 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 28px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      margin-bottom: 24px;
+      position: sticky;
+      top: 16px;
+      z-index: 10;
     }
 
-    .topbar-link {
+    .brand {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: var(--surface);
-      border: 1px solid var(--surface-border);
-      box-shadow: var(--shadow);
-      color: var(--text-main);
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--secondary));
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .nav a,
+    .theme-toggle {
+      color: var(--text-muted);
+      font-size: 14px;
     }
 
     .theme-toggle {
-      border: 1px solid transparent;
-      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      background: var(--surface-strong);
       color: var(--text-main);
-      padding: 10px 16px;
+      padding: 10px 14px;
       border-radius: 999px;
       cursor: pointer;
-      box-shadow: var(--shadow);
     }
 
     .hero {
+      padding: 34px;
+      border-radius: 32px;
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 24px;
-      align-items: stretch;
-    }
-
-    .hero-card,
-    .panel,
-    .tips-card {
-      background: var(--surface);
-      border: 1px solid var(--surface-border);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-    }
-
-    .hero-card {
-      padding: 36px;
-      text-align: left;
+      margin-bottom: 24px;
     }
 
     .eyebrow {
@@ -143,73 +161,30 @@
       color: var(--accent);
       font-size: 13px;
       font-weight: 700;
-      letter-spacing: 0.02em;
     }
 
     h1 {
       margin: 18px 0 14px;
-      font-size: clamp(36px, 6vw, 64px);
-      line-height: 1.02;
-      letter-spacing: -0.04em;
+      font-size: clamp(36px, 6vw, 58px);
+      line-height: 1.04;
+      letter-spacing: -0.05em;
     }
 
-    .hero-copy {
-      margin: 0 0 24px;
-      color: var(--text-muted);
-      font-size: 18px;
-      line-height: 1.7;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .mini-stat {
-      padding: 16px;
-      border-radius: 20px;
-      background: var(--surface-strong);
-      border: 1px solid var(--surface-border);
-    }
-
-    .mini-stat strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 20px;
-    }
-
-    .mini-stat span {
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .panel {
-      padding: 24px;
-      display: grid;
-      gap: 18px;
-    }
-
-    .panel-head {
-      text-align: left;
-    }
-
-    .panel-head h2 {
-      margin: 0 0 8px;
-      font-size: 24px;
-    }
-
-    .panel-head p {
+    .hero p,
+    .hero-side p,
+    .section-card p,
+    .footer p,
+    li {
       margin: 0;
       color: var(--text-muted);
-      line-height: 1.6;
+      line-height: 1.75;
     }
 
-    .actions {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .hero-actions {
+      display: flex;
       gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
     }
 
     .btn,
@@ -217,13 +192,13 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      min-height: 54px;
+      min-height: 52px;
+      padding: 0 18px;
       border: none;
       border-radius: 18px;
       cursor: pointer;
-      transition: transform 0.15s ease, background 0.2s ease, opacity 0.2s ease;
-      font-weight: 700;
+      font-weight: 800;
+      transition: transform 0.15s ease, background 0.2s ease;
     }
 
     .btn:hover,
@@ -247,37 +222,95 @@
       color: var(--secondary);
     }
 
-    .btn-ghost {
+    .btn[disabled] {
+      opacity: 0.48;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 14px;
+    }
+
+    .info-box {
+      padding: 20px;
+      border-radius: 22px;
       background: var(--surface-strong);
-      color: var(--text-main);
       border: 1px solid var(--surface-border);
     }
 
-    .btn[disabled] {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
+    .info-box h2,
+    .section-card h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      letter-spacing: -0.03em;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      margin: 14px 0 0;
+      list-style: none;
+    }
+
+    .list li {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+    }
+
+    .stage-shell,
+    .info-shell,
+    .footer {
+      border-radius: 32px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 18px 0;
     }
 
     .hidden-input {
       display: none;
     }
 
-    .stage-grid {
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .stage-grid,
+    .section-row,
+    .footer {
       display: grid;
-      grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 18px;
-      align-items: start;
-      margin-top: 24px;
+    }
+
+    .viewer,
+    .result-card,
+    .section-card {
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+      border-radius: 24px;
     }
 
     .viewer {
-      position: relative;
       min-height: 360px;
       padding: 16px;
-      border-radius: 24px;
-      background: var(--surface-strong);
-      border: 1px solid var(--surface-border);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -285,41 +318,25 @@
     }
 
     .viewer-placeholder {
-      color: var(--text-muted);
+      max-width: 240px;
       text-align: center;
+      color: var(--text-muted);
       line-height: 1.7;
-      max-width: 220px;
     }
 
     .viewer canvas,
     .viewer img {
       width: 100%;
-      max-width: 320px;
+      max-width: 340px;
       aspect-ratio: 1 / 1;
       object-fit: cover;
       border-radius: 20px;
-      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.14);
     }
 
-    .status-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: var(--surface-strong);
-      border: 1px solid var(--surface-border);
-      color: var(--text-muted);
-      font-size: 14px;
-      justify-self: start;
-    }
-
-    .result-card {
+    .result-card,
+    .section-card {
       padding: 22px;
-      border-radius: 24px;
-      background: var(--surface-strong);
-      border: 1px solid var(--surface-border);
-      text-align: left;
     }
 
     .result-tag {
@@ -334,22 +351,15 @@
       font-weight: 700;
     }
 
-    .result-card h3 {
+    .result-card h2 {
       margin: 16px 0 8px;
       font-size: 32px;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
     }
 
     .result-score {
       margin: 0 0 14px;
-      font-size: 16px;
       color: var(--text-muted);
-    }
-
-    .result-description {
-      margin: 0;
-      color: var(--text-muted);
-      line-height: 1.7;
     }
 
     .bars {
@@ -384,33 +394,27 @@
       border-radius: 999px;
     }
 
-    .tips-section {
-      margin-top: 24px;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
+    .footer-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
     }
 
-    .tips-card {
-      padding: 20px;
-      text-align: left;
+    .footer-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+      color: var(--text-main);
+      font-size: 14px;
     }
 
-    .tips-card h3 {
-      margin: 0 0 10px;
-      font-size: 18px;
-    }
-
-    .tips-card p {
-      margin: 0;
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
-
-    @media (max-width: 980px) {
+    @media (max-width: 940px) {
       .hero,
       .stage-grid,
-      .tips-section {
+      .section-row,
+      .footer {
         grid-template-columns: 1fr;
       }
     }
@@ -418,21 +422,23 @@
     @media (max-width: 720px) {
       .page {
         width: min(100% - 20px, 100%);
-        padding-top: 20px;
       }
 
       .topbar,
-      .actions,
-      .hero-grid {
+      .nav,
+      .hero-actions {
+        display: grid;
         grid-template-columns: 1fr;
       }
 
       .topbar {
-        display: grid;
+        border-radius: 28px;
       }
 
-      .hero-card,
-      .panel {
+      .hero,
+      .stage-shell,
+      .info-shell,
+      .footer {
         padding: 22px;
       }
 
@@ -449,89 +455,134 @@
 
 <body>
   <main class="page">
-    <div class="topbar">
-      <a class="topbar-link" href="./index.html">기존 메인 페이지로 돌아가기</a>
-      <button class="theme-toggle" id="themeToggleBtn" type="button">다크 모드</button>
-    </div>
+    <header class="topbar">
+      <a class="brand" href="./index.html">
+        <span class="brand-dot"></span>
+        <span>동물상 연구소</span>
+      </a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="./index.html">홈</a>
+        <a href="./about.html">사이트 소개</a>
+        <a href="./privacy.html">개인정보 처리</a>
+        <a href="./contact.html">문의하기</a>
+        <button class="theme-toggle" id="themeToggleBtn" type="button">다크 모드</button>
+      </nav>
+    </header>
 
     <section class="hero">
-      <article class="hero-card">
-        <span class="eyebrow">Teachable Machine 모델 연동 완료</span>
-        <h1>내 얼굴은<br />강아지상일까, 고양이상일까</h1>
-        <p class="hero-copy">
-          웹캠이나 사진 업로드로 바로 확인하는 동물상 테스트입니다.
-          업로드한 모델의 `dog` / `cat` 분류 결과를 기반으로 가장 닮은 인상을 보여줍니다.
+      <div>
+        <span class="eyebrow">실시간 이미지 분류 테스트</span>
+        <h1>강아지상인지<br />고양이상인지 바로 확인</h1>
+        <p>
+          제공된 `Teachable Machine` 이미지 모델을 기반으로 얼굴 사진 또는 웹캠 프레임을 분석합니다.
+          결과는 오락과 실험 목적의 분류값이며, 점수와 함께 해석 가이드를 함께 보여줍니다.
         </p>
-
-        <div class="hero-grid">
-          <div class="mini-stat">
-            <strong>2종 분류</strong>
-            <span>강아지상 / 고양이상</span>
-          </div>
-          <div class="mini-stat">
-            <strong>실시간 분석</strong>
-            <span>웹캠 프레임을 연속 추론</span>
-          </div>
-          <div class="mini-stat">
-            <strong>사진 업로드</strong>
-            <span>카메라 없이도 테스트 가능</span>
-          </div>
+        <div class="hero-actions">
+          <a class="btn btn-secondary" href="#guide">사용 가이드로 이동</a>
         </div>
-      </article>
-
-      <section class="panel">
-        <div class="panel-head">
-          <h2>테스트 시작</h2>
-          <p>카메라 권한을 허용하거나 정면 사진을 업로드하면 결과가 바로 갱신됩니다.</p>
-        </div>
-
-        <div class="actions">
-          <button class="btn btn-primary" id="startBtn" type="button">웹캠 시작</button>
-          <button class="btn btn-secondary" id="stopBtn" type="button" disabled>웹캠 중지</button>
-          <label class="upload-label" for="imageInput">사진 업로드</label>
-          <input class="hidden-input" id="imageInput" type="file" accept="image/*" />
-        </div>
-
-        <span class="status-chip" id="statusChip">모델 준비 전</span>
-
-      </section>
-    </section>
-
-    <div class="stage-grid">
-      <div class="viewer" id="viewer">
-        <div class="viewer-placeholder" id="viewerPlaceholder">
-          웹캠을 시작하거나 이미지를 업로드하면
-          이 영역에 분석 대상이 표시됩니다
-        </div>
-        <img id="uploadPreview" alt="업로드한 이미지 미리보기" hidden />
       </div>
 
-      <div class="result-card">
-        <span class="result-tag">ANIMAL FACE TEST</span>
-        <h3 id="resultTitle">분석 대기 중</h3>
-        <p class="result-score" id="resultScore">모델 로드 후 결과를 표시합니다</p>
-        <p class="result-description" id="resultDescription">
-          정면 얼굴, 안정적인 조명, 단순한 배경일수록 예측이 더 안정적입니다.
-        </p>
-
-        <div class="bars" id="bars"></div>
-      </div>
-    </div>
-
-    <section class="tips-section">
-      <article class="tips-card">
-        <h3>강아지상으로 나올 때</h3>
-        <p>부드럽고 친근한 인상, 둥근 분위기, 밝은 표정 쪽으로 모델이 반응하는 경우가 많습니다.</p>
-      </article>
-      <article class="tips-card">
-        <h3>고양이상으로 나올 때</h3>
-        <p>선이 또렷하고 시선이 날렵한 인상, 차분한 표정, 대비가 강한 사진에서 확률이 올라갈 수 있습니다.</p>
-      </article>
-      <article class="tips-card">
-        <h3>결과 팁</h3>
-        <p>얼굴이 작게 나오거나 각도가 심하면 오차가 커질 수 있습니다. 가능하면 정면, 단색 배경 사진을 사용하세요.</p>
-      </article>
+      <aside class="hero-side">
+        <div class="info-box">
+          <h2>테스트 전 체크</h2>
+          <ul class="list">
+            <li>정면 얼굴과 안정적인 조명을 권장합니다</li>
+            <li>배경이 단순할수록 모델 반응이 일정해집니다</li>
+            <li>같은 사람도 표정과 각도에 따라 결과가 달라질 수 있습니다</li>
+          </ul>
+        </div>
+        <div class="info-box">
+          <h2>현재 모델 범위</h2>
+          <p>`dog` / `cat` 두 클래스로 분류하며, 각 클래스의 확률을 비교해서 최종 결과를 표시합니다.</p>
+        </div>
+      </aside>
     </section>
+
+    <section class="stage-shell">
+      <h2 style="margin:0 0 10px; font-size:28px; letter-spacing:-0.04em;">테스트 실행</h2>
+      <p style="margin:0; color:var(--text-muted); line-height:1.75;">웹캠 시작 또는 사진 업로드 중 하나를 선택하세요. 업로드한 모델 파일은 외부에서 로드되지만, 테스트 입력 자체는 브라우저 안에서 처리됩니다.</p>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="startBtn" type="button">웹캠 시작</button>
+        <button class="btn btn-secondary" id="stopBtn" type="button" disabled>웹캠 중지</button>
+        <label class="upload-label" for="imageInput">사진 업로드</label>
+        <input class="hidden-input" id="imageInput" type="file" accept="image/*" />
+      </div>
+
+      <span class="status-chip" id="statusChip">모델 준비 전</span>
+
+      <div class="stage-grid" style="margin-top:18px;">
+        <div class="viewer" id="viewer">
+          <div class="viewer-placeholder" id="viewerPlaceholder">
+            테스트를 시작하면 이 영역에 웹캠 영상 또는 업로드 이미지가 표시됩니다
+          </div>
+          <img id="uploadPreview" alt="업로드 이미지 미리보기" hidden />
+        </div>
+
+        <div class="result-card">
+          <span class="result-tag">ANIMAL FACE TEST</span>
+          <h2 id="resultTitle">분석 대기 중</h2>
+          <p class="result-score" id="resultScore">모델 로드 후 결과를 표시합니다</p>
+          <p id="resultDescription" style="margin:0; color:var(--text-muted); line-height:1.75;">
+            결과는 가장 높은 확률값과 함께 표시되며, 분류가 애매할 때는 두 클래스 점수가 비슷하게 나올 수 있습니다.
+          </p>
+          <div class="bars" id="bars"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-shell" id="guide">
+      <div class="section-row">
+        <article class="section-card">
+          <h2>결과 해석 가이드</h2>
+          <p>
+            높은 확률은 해당 사진에서 모델이 더 강하게 감지한 특징을 의미합니다.
+            강아지상은 밝고 부드러운 인상, 고양이상은 선이 또렷하고 차분한 인상 쪽으로 반응할 수 있습니다.
+          </p>
+        </article>
+        <article class="section-card">
+          <h2>주의할 점</h2>
+          <p>
+            이 테스트는 재미용이며 의료, 심리, 신원 판별 용도가 아닙니다.
+            결과를 사람에 대한 평가 기준으로 사용하지 않도록 안내합니다.
+          </p>
+        </article>
+      </div>
+
+      <div class="section-row" style="margin-top:18px;">
+        <article class="section-card">
+          <h2>더 잘 맞는 사진 조건</h2>
+          <ul class="list">
+            <li>얼굴이 프레임 중앙에 위치할 것</li>
+            <li>눈, 코, 입이 가려지지 않을 것</li>
+            <li>너무 강한 역광이나 필터를 피할 것</li>
+          </ul>
+        </article>
+        <article class="section-card">
+          <h2>왜 운영 정보 페이지를 두었나</h2>
+          <p>
+            테스트 도구만 있는 사이트보다, 목적과 연락 경로, 개인정보 처리 방식이 분리된 사이트가 사용자가 이해하기 쉽습니다.
+            관련 안내는 `사이트 소개`, `개인정보 처리`, `문의하기` 페이지에서 확인할 수 있습니다.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <h2 style="margin:0 0 10px; font-size:24px; letter-spacing:-0.03em;">테스트 운영 원칙</h2>
+        <p>동물상 연구소는 테스트 도구, 사용 가이드, 운영 정보가 함께 있는 구조를 지향합니다. 결과 설명은 과장하지 않고, 모델 한계를 함께 안내합니다.</p>
+      </div>
+      <div>
+        <h2 style="margin:0 0 10px; font-size:24px; letter-spacing:-0.03em;">바로가기</h2>
+        <div class="footer-links">
+          <a class="footer-link" href="./index.html">홈</a>
+          <a class="footer-link" href="./about.html">사이트 소개</a>
+          <a class="footer-link" href="./privacy.html">개인정보 처리</a>
+          <a class="footer-link" href="./contact.html">문의하기</a>
+        </div>
+      </div>
+    </footer>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
@@ -542,12 +593,12 @@
     const classProfiles = {
       dog: {
         title: "강아지상",
-        description: "친근하고 사랑스러운 분위기로 분류됐습니다. 웃는 인상과 둥근 실루엣에 모델이 더 반응한 결과일 수 있습니다.",
+        description: "부드럽고 친근한 분위기 쪽으로 모델이 더 강하게 반응했습니다.",
         color: "var(--dog)"
       },
       cat: {
         title: "고양이상",
-        description: "도시적이고 또렷한 분위기로 분류됐습니다. 눈매 대비나 차분한 표정 쪽 특징을 더 강하게 읽은 결과일 수 있습니다.",
+        description: "또렷하고 날렵한 분위기 쪽으로 모델이 더 강하게 반응했습니다.",
         color: "var(--cat)"
       }
     };
@@ -589,11 +640,6 @@
       applyTheme(theme);
     }
 
-    function toggleTheme() {
-      const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
-      setTheme(nextTheme);
-    }
-
     function setStatus(message) {
       statusChip.textContent = message;
     }
@@ -605,7 +651,7 @@
     function getProfile(name) {
       return classProfiles[normalizeClassName(name)] || {
         title: name,
-        description: "모델이 분류한 클래스 결과입니다.",
+        description: "모델 분류 결과입니다.",
         color: "var(--accent)"
       };
     }
@@ -636,27 +682,26 @@
       const sortedPredictions = [ ...predictions ].sort((a, b) => b.probability - a.probability);
       const topPrediction = sortedPredictions[0];
       const profile = getProfile(topPrediction.className);
-      const percentage = (topPrediction.probability * 100).toFixed(1);
+      const topPercentage = (topPrediction.probability * 100).toFixed(1);
 
       resultTitle.textContent = profile.title;
       resultTitle.style.color = profile.color;
-      resultScore.textContent = `가장 높은 확률 ${percentage}%`;
+      resultScore.textContent = `가장 높은 확률 ${topPercentage}%`;
       resultDescription.textContent = profile.description;
-
       bars.innerHTML = "";
 
       sortedPredictions.forEach((prediction) => {
-        const profileByRow = getProfile(prediction.className);
+        const rowProfile = getProfile(prediction.className);
         const percentage = (prediction.probability * 100).toFixed(1);
         const row = document.createElement("div");
         row.className = "bar-row";
         row.innerHTML = `
           <div class="bar-topline">
-            <span>${profileByRow.title}</span>
+            <span>${rowProfile.title}</span>
             <span>${percentage}%</span>
           </div>
           <div class="bar-track">
-            <div class="bar-fill" style="width: ${percentage}%; background: ${profileByRow.color};"></div>
+            <div class="bar-fill" style="width:${percentage}%; background:${rowProfile.color};"></div>
           </div>
         `;
         bars.appendChild(row);
@@ -712,7 +757,6 @@
       try {
         await ensureModelLoaded();
         await stopWebcam();
-
         webcam = new tmImage.Webcam(320, 320, true);
         await webcam.setup();
         await webcam.play();
@@ -769,6 +813,11 @@
       }
     }
 
+    themeToggleBtn.addEventListener("click", () => {
+      const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
+      setTheme(nextTheme);
+    });
+
     prefersDarkScheme.addEventListener("change", (event) => {
       if (window.localStorage.getItem(themeStorageKey)) {
         return;
@@ -776,7 +825,6 @@
       applyTheme(event.matches ? "dark" : "light");
     });
 
-    themeToggleBtn.addEventListener("click", toggleTheme);
     startBtn.addEventListener("click", startWebcam);
     stopBtn.addEventListener("click", stopWebcam);
     imageInput.addEventListener("change", handleImageUpload);
@@ -784,7 +832,6 @@
     applyTheme(getInitialTheme());
     ensureModelLoaded();
   </script>
-
 </body>
 
 </html>
