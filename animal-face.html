@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>동물상 테스트 | 강아지상 vs 고양이상</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg-top: #fff3e8;
+      --bg-bottom: #ffe1d3;
+      --surface: rgba(255, 252, 247, 0.82);
+      --surface-strong: rgba(255, 255, 255, 0.9);
+      --surface-border: rgba(163, 84, 36, 0.14);
+      --text-main: #28160e;
+      --text-muted: #73584b;
+      --accent: #e56b35;
+      --accent-hover: #ca5725;
+      --accent-soft: rgba(229, 107, 53, 0.14);
+      --secondary: #26667f;
+      --secondary-soft: rgba(38, 102, 127, 0.14);
+      --shadow: 0 20px 40px rgba(128, 67, 35, 0.12);
+      --dog: #e56b35;
+      --cat: #26667f;
+      --track: rgba(40, 22, 14, 0.08);
+    }
+
+    body[data-theme="dark"] {
+      color-scheme: dark;
+      --bg-top: #21110c;
+      --bg-bottom: #140d18;
+      --surface: rgba(24, 18, 23, 0.88);
+      --surface-strong: rgba(36, 28, 34, 0.96);
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --text-main: #fff4eb;
+      --text-muted: #d2b6a5;
+      --accent: #ff9966;
+      --accent-hover: #ff8750;
+      --accent-soft: rgba(255, 153, 102, 0.18);
+      --secondary: #86d5ed;
+      --secondary-soft: rgba(134, 213, 237, 0.16);
+      --shadow: 0 24px 48px rgba(0, 0, 0, 0.28);
+      --dog: #ff9966;
+      --cat: #86d5ed;
+      --track: rgba(255, 244, 235, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Pretendard", "Noto Sans KR", sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.45), transparent 30%),
+        linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .topbar-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      box-shadow: var(--shadow);
+      color: var(--text-main);
+    }
+
+    .theme-toggle {
+      border: 1px solid transparent;
+      background: var(--surface);
+      color: var(--text-main);
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-card,
+    .panel,
+    .tips-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-card {
+      padding: 36px;
+      text-align: left;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-copy {
+      margin: 0 0 24px;
+      color: var(--text-muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .mini-stat {
+      padding: 16px;
+      border-radius: 20px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+    }
+
+    .mini-stat strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 20px;
+    }
+
+    .mini-stat span {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .panel {
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel-head {
+      text-align: left;
+    }
+
+    .panel-head h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+    }
+
+    .panel-head p {
+      margin: 0;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .btn,
+    .upload-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 54px;
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.2s ease, opacity 0.2s ease;
+      font-weight: 700;
+    }
+
+    .btn:hover,
+    .upload-label:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary,
+    .upload-label {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover,
+    .upload-label:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: var(--secondary-soft);
+      color: var(--secondary);
+    }
+
+    .btn-ghost {
+      background: var(--surface-strong);
+      color: var(--text-main);
+      border: 1px solid var(--surface-border);
+    }
+
+    .btn[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .hidden-input {
+      display: none;
+    }
+
+    .stage-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      margin-top: 24px;
+    }
+
+    .viewer {
+      position: relative;
+      min-height: 360px;
+      padding: 16px;
+      border-radius: 24px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .viewer-placeholder {
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.7;
+      max-width: 220px;
+    }
+
+    .viewer canvas,
+    .viewer img {
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      font-size: 14px;
+      justify-self: start;
+    }
+
+    .result-card {
+      padding: 22px;
+      border-radius: 24px;
+      background: var(--surface-strong);
+      border: 1px solid var(--surface-border);
+      text-align: left;
+    }
+
+    .result-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .result-card h3 {
+      margin: 16px 0 8px;
+      font-size: 32px;
+      letter-spacing: -0.03em;
+    }
+
+    .result-score {
+      margin: 0 0 14px;
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+
+    .result-description {
+      margin: 0;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .bars {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .bar-row {
+      display: grid;
+      gap: 8px;
+    }
+
+    .bar-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-weight: 700;
+    }
+
+    .bar-track {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: var(--track);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .tips-section {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .tips-card {
+      padding: 20px;
+      text-align: left;
+    }
+
+    .tips-card h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .tips-card p {
+      margin: 0;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .stage-grid,
+      .tips-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        width: min(100% - 20px, 100%);
+        padding-top: 20px;
+      }
+
+      .topbar,
+      .actions,
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        display: grid;
+      }
+
+      .hero-card,
+      .panel {
+        padding: 22px;
+      }
+
+      h1 {
+        font-size: 40px;
+      }
+
+      .viewer {
+        min-height: 280px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="topbar-link" href="./index.html">기존 메인 페이지로 돌아가기</a>
+      <button class="theme-toggle" id="themeToggleBtn" type="button">다크 모드</button>
+    </div>
+
+    <section class="hero">
+      <article class="hero-card">
+        <span class="eyebrow">Teachable Machine 모델 연동 완료</span>
+        <h1>내 얼굴은<br />강아지상일까, 고양이상일까</h1>
+        <p class="hero-copy">
+          웹캠이나 사진 업로드로 바로 확인하는 동물상 테스트입니다.
+          업로드한 모델의 `dog` / `cat` 분류 결과를 기반으로 가장 닮은 인상을 보여줍니다.
+        </p>
+
+        <div class="hero-grid">
+          <div class="mini-stat">
+            <strong>2종 분류</strong>
+            <span>강아지상 / 고양이상</span>
+          </div>
+          <div class="mini-stat">
+            <strong>실시간 분석</strong>
+            <span>웹캠 프레임을 연속 추론</span>
+          </div>
+          <div class="mini-stat">
+            <strong>사진 업로드</strong>
+            <span>카메라 없이도 테스트 가능</span>
+          </div>
+        </div>
+      </article>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>테스트 시작</h2>
+          <p>카메라 권한을 허용하거나 정면 사진을 업로드하면 결과가 바로 갱신됩니다.</p>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="startBtn" type="button">웹캠 시작</button>
+          <button class="btn btn-secondary" id="stopBtn" type="button" disabled>웹캠 중지</button>
+          <label class="upload-label" for="imageInput">사진 업로드</label>
+          <input class="hidden-input" id="imageInput" type="file" accept="image/*" />
+        </div>
+
+        <span class="status-chip" id="statusChip">모델 준비 전</span>
+
+      </section>
+    </section>
+
+    <div class="stage-grid">
+      <div class="viewer" id="viewer">
+        <div class="viewer-placeholder" id="viewerPlaceholder">
+          웹캠을 시작하거나 이미지를 업로드하면
+          이 영역에 분석 대상이 표시됩니다
+        </div>
+        <img id="uploadPreview" alt="업로드한 이미지 미리보기" hidden />
+      </div>
+
+      <div class="result-card">
+        <span class="result-tag">ANIMAL FACE TEST</span>
+        <h3 id="resultTitle">분석 대기 중</h3>
+        <p class="result-score" id="resultScore">모델 로드 후 결과를 표시합니다</p>
+        <p class="result-description" id="resultDescription">
+          정면 얼굴, 안정적인 조명, 단순한 배경일수록 예측이 더 안정적입니다.
+        </p>
+
+        <div class="bars" id="bars"></div>
+      </div>
+    </div>
+
+    <section class="tips-section">
+      <article class="tips-card">
+        <h3>강아지상으로 나올 때</h3>
+        <p>부드럽고 친근한 인상, 둥근 분위기, 밝은 표정 쪽으로 모델이 반응하는 경우가 많습니다.</p>
+      </article>
+      <article class="tips-card">
+        <h3>고양이상으로 나올 때</h3>
+        <p>선이 또렷하고 시선이 날렵한 인상, 차분한 표정, 대비가 강한 사진에서 확률이 올라갈 수 있습니다.</p>
+      </article>
+      <article class="tips-card">
+        <h3>결과 팁</h3>
+        <p>얼굴이 작게 나오거나 각도가 심하면 오차가 커질 수 있습니다. 가능하면 정면, 단색 배경 사진을 사용하세요.</p>
+      </article>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+  <script>
+    const MODEL_URL = "https://teachablemachine.withgoogle.com/models/sO47d3t6B/";
+    const themeStorageKey = "animal-face-theme";
+    const classProfiles = {
+      dog: {
+        title: "강아지상",
+        description: "친근하고 사랑스러운 분위기로 분류됐습니다. 웃는 인상과 둥근 실루엣에 모델이 더 반응한 결과일 수 있습니다.",
+        color: "var(--dog)"
+      },
+      cat: {
+        title: "고양이상",
+        description: "도시적이고 또렷한 분위기로 분류됐습니다. 눈매 대비나 차분한 표정 쪽 특징을 더 강하게 읽은 결과일 수 있습니다.",
+        color: "var(--cat)"
+      }
+    };
+
+    let model;
+    let webcam;
+    let animationFrameId = null;
+    let isWebcamRunning = false;
+
+    const themeToggleBtn = document.getElementById("themeToggleBtn");
+    const startBtn = document.getElementById("startBtn");
+    const stopBtn = document.getElementById("stopBtn");
+    const imageInput = document.getElementById("imageInput");
+    const viewer = document.getElementById("viewer");
+    const viewerPlaceholder = document.getElementById("viewerPlaceholder");
+    const uploadPreview = document.getElementById("uploadPreview");
+    const statusChip = document.getElementById("statusChip");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultScore = document.getElementById("resultScore");
+    const resultDescription = document.getElementById("resultDescription");
+    const bars = document.getElementById("bars");
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+    function getInitialTheme() {
+      const storedTheme = window.localStorage.getItem(themeStorageKey);
+      if (storedTheme === "light" || storedTheme === "dark") {
+        return storedTheme;
+      }
+      return prefersDarkScheme.matches ? "dark" : "light";
+    }
+
+    function applyTheme(theme) {
+      document.body.dataset.theme = theme;
+      themeToggleBtn.textContent = theme === "dark" ? "화이트 모드" : "다크 모드";
+    }
+
+    function setTheme(theme) {
+      window.localStorage.setItem(themeStorageKey, theme);
+      applyTheme(theme);
+    }
+
+    function toggleTheme() {
+      const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
+      setTheme(nextTheme);
+    }
+
+    function setStatus(message) {
+      statusChip.textContent = message;
+    }
+
+    function normalizeClassName(name) {
+      return name.trim().toLowerCase();
+    }
+
+    function getProfile(name) {
+      return classProfiles[normalizeClassName(name)] || {
+        title: name,
+        description: "모델이 분류한 클래스 결과입니다.",
+        color: "var(--accent)"
+      };
+    }
+
+    async function ensureModelLoaded() {
+      if (model) {
+        return model;
+      }
+
+      setStatus("모델 불러오는 중");
+      startBtn.disabled = true;
+
+      try {
+        model = await tmImage.load(MODEL_URL + "model.json", MODEL_URL + "metadata.json");
+        setStatus("모델 준비 완료");
+        resultScore.textContent = "웹캠 또는 사진 업로드로 분석을 시작하세요";
+        return model;
+      } catch (error) {
+        setStatus("모델 로드 실패");
+        resultScore.textContent = "모델 파일을 불러오지 못했습니다";
+        throw error;
+      } finally {
+        startBtn.disabled = false;
+      }
+    }
+
+    function setResult(predictions) {
+      const sortedPredictions = [ ...predictions ].sort((a, b) => b.probability - a.probability);
+      const topPrediction = sortedPredictions[0];
+      const profile = getProfile(topPrediction.className);
+      const percentage = (topPrediction.probability * 100).toFixed(1);
+
+      resultTitle.textContent = profile.title;
+      resultTitle.style.color = profile.color;
+      resultScore.textContent = `가장 높은 확률 ${percentage}%`;
+      resultDescription.textContent = profile.description;
+
+      bars.innerHTML = "";
+
+      sortedPredictions.forEach((prediction) => {
+        const profileByRow = getProfile(prediction.className);
+        const percentage = (prediction.probability * 100).toFixed(1);
+        const row = document.createElement("div");
+        row.className = "bar-row";
+        row.innerHTML = `
+          <div class="bar-topline">
+            <span>${profileByRow.title}</span>
+            <span>${percentage}%</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width: ${percentage}%; background: ${profileByRow.color};"></div>
+          </div>
+        `;
+        bars.appendChild(row);
+      });
+    }
+
+    async function predictFromSource(source, statusMessage) {
+      const activeModel = await ensureModelLoaded();
+      const predictions = await activeModel.predict(source);
+      setResult(predictions);
+      setStatus(statusMessage);
+    }
+
+    function clearViewer() {
+      const canvas = viewer.querySelector("canvas");
+      if (canvas) {
+        canvas.remove();
+      }
+      uploadPreview.hidden = true;
+      uploadPreview.removeAttribute("src");
+      viewerPlaceholder.hidden = false;
+    }
+
+    async function stopWebcam() {
+      isWebcamRunning = false;
+      if (animationFrameId) {
+        window.cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+      if (webcam) {
+        await webcam.stop();
+        webcam = null;
+      }
+      stopBtn.disabled = true;
+      startBtn.disabled = false;
+      clearViewer();
+      setStatus("웹캠 중지됨");
+    }
+
+    async function loop() {
+      if (!isWebcamRunning || !webcam) {
+        return;
+      }
+
+      webcam.update();
+      await predictFromSource(webcam.canvas, "실시간 분석 중");
+      animationFrameId = window.requestAnimationFrame(loop);
+    }
+
+    async function startWebcam() {
+      startBtn.disabled = true;
+
+      try {
+        await ensureModelLoaded();
+        await stopWebcam();
+
+        webcam = new tmImage.Webcam(320, 320, true);
+        await webcam.setup();
+        await webcam.play();
+
+        viewerPlaceholder.hidden = true;
+        uploadPreview.hidden = true;
+        viewer.appendChild(webcam.canvas);
+
+        isWebcamRunning = true;
+        stopBtn.disabled = false;
+        setStatus("카메라 연결 완료");
+        animationFrameId = window.requestAnimationFrame(loop);
+      } catch (error) {
+        clearViewer();
+        setStatus("카메라 권한 또는 연결 확인 필요");
+        resultScore.textContent = "웹캠 시작에 실패했습니다";
+      } finally {
+        startBtn.disabled = false;
+      }
+    }
+
+    function readFileAsDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error("파일을 읽을 수 없습니다"));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function handleImageUpload(event) {
+      const file = event.target.files[0];
+      if (!file) {
+        return;
+      }
+
+      try {
+        await stopWebcam();
+        await ensureModelLoaded();
+        const imageUrl = await readFileAsDataUrl(file);
+
+        uploadPreview.onload = async () => {
+          viewerPlaceholder.hidden = true;
+          uploadPreview.hidden = false;
+          await predictFromSource(uploadPreview, "업로드 이미지 분석 완료");
+        };
+
+        uploadPreview.src = imageUrl;
+      } catch (error) {
+        setStatus("이미지 분석 실패");
+        resultScore.textContent = "업로드한 이미지를 처리하지 못했습니다";
+      } finally {
+        event.target.value = "";
+      }
+    }
+
+    prefersDarkScheme.addEventListener("change", (event) => {
+      if (window.localStorage.getItem(themeStorageKey)) {
+        return;
+      }
+      applyTheme(event.matches ? "dark" : "light");
+    });
+
+    themeToggleBtn.addEventListener("click", toggleTheme);
+    startBtn.addEventListener("click", startWebcam);
+    stopBtn.addEventListener("click", stopWebcam);
+    imageInput.addEventListener("change", handleImageUpload);
+
+    applyTheme(getInitialTheme());
+    ensureModelLoaded();
+  </script>
+
+</body>
+
+</html>

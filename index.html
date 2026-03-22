@@ -288,6 +288,37 @@
       text-align: left;
     }
 
+    .feature-link-card {
+      margin-top: 24px;
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(229, 107, 53, 0.12), rgba(38, 102, 127, 0.14));
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      text-align: left;
+    }
+
+    .feature-link-card h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+    }
+
+    .feature-link-card p {
+      margin-bottom: 16px;
+    }
+
+    .feature-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 14px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
     #disqus_thread {
       min-height: 160px;
     }
@@ -341,6 +372,12 @@
 
     <div class="sets" id="sets"></div>
     <div class="info" id="info"></div>
+
+    <section class="feature-link-card" aria-labelledby="animalFaceHeading">
+      <h2 id="animalFaceHeading">새 페이지: 동물상 테스트</h2>
+      <p>업로드한 `Teachable Machine` 모델로 강아지상 / 고양이상을 분류하는 별도 페이지를 추가했습니다.</p>
+      <a class="feature-link" href="./animal-face.html">동물상 테스트 열기</a>
+    </section>
 
     <section class="contact-section" aria-labelledby="contactHeading">
       <h2 class="section-heading" id="contactHeading">제휴 문의</h2>
